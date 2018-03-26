@@ -6,6 +6,6 @@
 
 * ktop
 
-* ksprite
+* newsprite
 
 * nitiwat
