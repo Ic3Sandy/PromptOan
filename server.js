@@ -5,15 +5,15 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get('/main', function (req, res) {
-    res.sendFile(__dirname+'/main.html');
+    res.sendFile(__dirname+'/view/main.html');
 });
 
 app.get('/test-post', function (req, res) {
-    res.sendFile(__dirname+'/test-post.html');
+    res.sendFile(__dirname+'/view/test-post.html');
 });
 
 app.get('/test-sendfile', function (req, res) {
-    res.download(__dirname+'/main.html', 'namefile.html');
+    res.download(__dirname+'/view/main.html', 'namefile.html');
 });
 
 app.post('/main', function (req, res) {
@@ -22,7 +22,7 @@ app.post('/main', function (req, res) {
     console.log(req.body.user.email);
 });
 
-var server = app.listen(8080, function () {
+var server = app.listen(5000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
