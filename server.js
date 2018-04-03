@@ -4,8 +4,15 @@ var pem = require('pem')
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser');
+
+// Own Modules
+var get_ipwifi = require('./modules/get_ipwifi.js')
+var ip = get_ipwifi.getIPwifi()
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.engine('html', require('ejs').renderFile) //support for res.render()
+
 
 
 app.get('/', function (req, res) {
@@ -16,8 +23,8 @@ app.get('/test-post', function (req, res) {
   res.sendFile(__dirname+'/view/test-post.html');
 });
 
-app.get('/test-sendfile', function (req, res) {
-  res.download(__dirname+'/view/main.html', 'namefile.html');
+app.get('/test-downloadfile', function (req, res) {
+  res.download(__dirname+'/qrcode.png', 'qrcode');
 });
 
 app.get('/camera', function (req, res) {
@@ -25,22 +32,22 @@ app.get('/camera', function (req, res) {
 });
 
 app.post('/main', function (req, res) {
-  res.redirect(200, 'https://'+ip_wifi+':5000/');
+  res.redirect(200, 'https://'+ip+':5000/');
   console.log(req.body.user.name);
   console.log(req.body.user.email);
 });
 
 app.get('/login', function (req, res) {
-  res.render(__dirname+'/view/login.html', {ip : ip_wifi});
+  res.render(__dirname+"/view/login.html", {ip : ip});
 });
 
 app.post('/login', function (req, res) {
 	if(req.body.username=='foo'&&req.body.password=='bar'){
-  res.redirect(200, 'https://'+ip_wifi+':5000/home');
-}else{
-	res.redirect(200, 'https://'+ip_wifi+':5000/login');
-}
-});
+  res.redirect(200, 'https://'+ip+':5000/home');
+  }else{
+	res.redirect(200, 'https://'+ip+':5000/login');
+  }
+})
 
 http.createServer(app).listen(8000)
 pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
