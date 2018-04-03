@@ -25,9 +25,21 @@ app.get('/camera', function (req, res) {
 });
 
 app.post('/main', function (req, res) {
-  res.redirect(200, 'https://192.168.1.4:5000/');
+  res.redirect(200, 'https://'+ip_wifi+':5000/');
   console.log(req.body.user.name);
   console.log(req.body.user.email);
+});
+
+app.get('/login', function (req, res) {
+  res.render(__dirname+'/view/login.html', {ip : ip_wifi});
+});
+
+app.post('/login', function (req, res) {
+	if(req.body.username=='foo'&&req.body.password=='bar'){
+  res.redirect(200, 'https://'+ip_wifi+':5000/home');
+}else{
+	res.redirect(200, 'https://'+ip_wifi+':5000/login');
+}
 });
 
 http.createServer(app).listen(8000)
