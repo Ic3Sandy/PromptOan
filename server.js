@@ -33,6 +33,9 @@ app.post('/main', function (req, res) {
 http.createServer(app).listen(8000)
 pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   if (err) {throw err}
+
   var option = { key: keys.serviceKey, cert: keys.certificate }
+  console.log('Server Start...!')
+
   https.createServer(option, app).listen(5000)
 })
