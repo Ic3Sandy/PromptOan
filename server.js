@@ -14,13 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.engine('html', require('ejs').renderFile) //support for res.render()
 
 
-
 app.get('/', function (req, res) {
   res.sendFile(__dirname+'/view/main.html');
-});
-
-app.get('/test-post', function (req, res) {
-  res.sendFile(__dirname+'/view/test-post.html');
 });
 
 app.get('/test-downloadfile', function (req, res) {
