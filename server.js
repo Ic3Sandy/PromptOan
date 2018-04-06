@@ -36,9 +36,26 @@ app.get('/login', function (req, res) {
   res.render(__dirname+"/view/login.html", {ip : ip});
 });
 
+app.get('/home', function(req,res){
+	res.render(__dirname+"/view/home.html", {ip:ip});
+
+});
+
+app.get('/scanqr',function(req,res){
+	res.render(__dirname+"/view/scanqr.html",{ip:ip});
+})
+app.get('/genqr',function(req,res){
+	res.render(__dirname+"/view/genqr.html",{ip:ip});
+})
+app.post('/genqr',function(req,res){
+	res.render(__dirname+"/view/qrcode.html",{ip:ip});
+})
+
+
+
 app.post('/login', function (req, res) {
-	if(req.body.username=='foo'&&req.body.password=='bar'){
-  res.redirect(200, 'https://'+ip+':5000/home');
+  if(req.body.username=='foo'&&req.body.password=='bar'){
+  	res.redirect(200, 'https://'+ip+':5000/home');
   }else{
 	res.redirect(200, 'https://'+ip+':5000/login');
   }

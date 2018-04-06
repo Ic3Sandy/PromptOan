@@ -6,4 +6,3 @@ exports.getIPwifi = function() {
     console.log('Wi-Fi address: '+ip)
     return ip
 }
-
