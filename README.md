@@ -9,6 +9,7 @@
 - [ ] ลิ้งหน้า html ต่างๆเข้ากับ server
 - [ ] ทำหน้า scan qrcode
 - [x] ทำการส่งผ่านค่าจาก server ไป html
+- [ ] สร้าง database ของ user
 
 ### Information
 
