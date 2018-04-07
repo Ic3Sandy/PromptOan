@@ -25,10 +25,10 @@ con.connect(function(err) {
         console.log("[db_server] Table created")
     })
 
-    var sql = "INSERT INTO users (acc_num, username, password) VALUES ?";
+    var sql = "INSERT INTO users (acc_num, username, password, balance) VALUES ?";
     var values = [
-        [123, 'foo', 'bar'],
-        [456, 'alice', 'bob'],
+        [123, 'foo', 'bar', 500],
+        [456, 'alice', 'bob', 500],
     ];
     con.query(sql, [values], function (err, result) {
       if (err) throw err
