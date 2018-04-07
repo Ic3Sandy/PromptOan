@@ -17,6 +17,9 @@
 - folder modules ใช้สำหรับเก็บ modules ต่างๆที่เราสร้างเอง
 - folder qr-img ใช้เก็บรูป qrcode ที่สร้างมา
 - folder view เก็บไฟล์ html ต่างๆ
+- [การใช้ qrcode ของธนาคารแห่งประเทศไทย](https://www.bot.or.th/Thai/PaymentSystems/FinTech/Pages/default.aspx)
+- [blognone มาตรฐานการจ่ายเงินด้วย QR](https://www.blognone.com/node/94042)
+- [QR Code มาตรฐาน](https://thestandard.co/standardqrcode/)
 
 ### Mumber
 
