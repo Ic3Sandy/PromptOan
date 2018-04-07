@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TestLogin</title>
+	<title>Login</title>
 </head>
 <body>
-	<form action="https://{{ip}}:5000/login" method="POST">
+	
+	<form method="POST" action="<%=protocol%>://<%=ip%>:<%=port%>/login" >
 	Username  :<input type="text" name="username"><br>
 	Password   :<input type="text" name="password"><br>
 	<input type="submit" value="Login">
 	</form>
+	
 </body>
 
 </html>
