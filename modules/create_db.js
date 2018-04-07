@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+var mysql = require('mysql')
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -7,8 +7,8 @@ var con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) throw err;
-  console.log("[Modules Create DB] Connected Database!");
+  if (err) throw err
+  console.log("[Modules Create DB] Connected Database!")
 
   // con.query("DROP DATABASE IF EXISTS mydb", function (err, result) {
   //   if (err) throw err;
@@ -16,7 +16,7 @@ con.connect(function(err) {
   // });
 
   con.query("CREATE DATABASE IF NOT EXISTS mydb", function (err, result) {
-    if (err) throw err;
-    console.log("[Modules Create DB] Database created");
+    if (err) throw err
+    console.log("[Modules Create DB] Database created")
   });
 });

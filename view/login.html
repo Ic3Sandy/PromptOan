@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TestLogin</title>
-
+	<title>Login</title>
 </head>
 <body>
 	
-	<form method="POST" action="http://<%=ip%>:8000/login" >
+	<form method="POST" action="<%=protocol%>://<%=ip%>:<%=port%>/login" >
 	Username  :<input type="text" name="username"><br>
 	Password   :<input type="text" name="password"><br>
 	<input type="submit" value="Login">
