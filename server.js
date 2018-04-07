@@ -33,7 +33,7 @@ app.get('/login', function (req, res) {
 app.post('/login', function (req, res) {
   console.log('[server app.post /login] username: '+req.body.username)
   console.log('[server app.post /login] password: '+req.body.password)
-  function checkLogin(check){
+  function checkLogin(check, session){
     if(check){
       res.redirect(protocol+'://'+ip+':'+port+'/home')
     }else{
@@ -48,15 +48,15 @@ app.get('/home', function(req,res){
 });
 
 app.get('/scanqr',function(req,res){
-	res.render(__dirname+"/view/scanqr.html",{ip:ip});
+	res.render(__dirname+"/view/scanqr.html", {ip:ip});
 })
 
 app.get('/genqr',function(req,res){
-	res.render(__dirname+"/view/genqr.html",{ip:ip});
+	res.render(__dirname+"/view/genqr.html", {ip:ip});
 })
 
 app.post('/genqr',function(req,res){
-	res.render(__dirname+"/view/qrcode.html",{ip:ip});
+	res.render(__dirname+"/view/qrcode.html", {ip:ip});
 })
 
 
