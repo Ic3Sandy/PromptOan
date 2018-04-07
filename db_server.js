@@ -16,13 +16,13 @@ con.connect(function(err) {
     var sql = "DROP TABLE IF EXISTS users"
     con.query(sql, function (err, result) {
         if (err) throw err;
-        console.log("Table drop");
+        console.log("[db_server] Table drop");
     });
 
     var sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, acc_num INT, username VARCHAR(255), password VARCHAR(255), session VARCHAR(255))";
     con.query(sql, function (err, result) {
         if (err) throw err;
-        console.log("Table created");
+        console.log("[db_server] Table created");
     });
 
     var sql = "INSERT INTO users (acc_num, username, password) VALUES ?";
@@ -37,20 +37,22 @@ con.connect(function(err) {
 
 });
 
-exports.checkLogin = function(username, password) {
+exports.checkLogin = function(username, password, callback) {
     
-    console.log("Check password!")
+    console.log("[db_server checkLogin] Check password!")
     var sql = 'SELECT * FROM users WHERE username = ' + mysql.escape(username)
     con.query(sql, function (err, result, fields) {
         if (err) throw err
-        console.log(username, password)
+
+        console.log('[db_server checkLogin] username: '+username)
+        console.log('[db_server checkLogin] password: '+password)
+
         if (result.length == 0){
-            console.log('false')
-            return false
+            console.log('[db_server checkLogin] Username or Password Incorrect')
+            callback(false)
         }else if(result[0].password == password){
-            console.log('result[0].password == password true')
-            return true
+            console.log('[db_server checkLogin] Access Granted')
+            callback(true)
         }
-        return false
     });
 }

@@ -28,14 +28,26 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-  var check = true
-  console.log('post: '+check)
-  if(db.checkLogin(req.body.username, req.body.password)){
+  console.log('[server app.post /login] username: '+req.body.username)
+  console.log('[server app.post /login] password: '+req.body.password)
+  function checkLogin(check){
+    if(check){
+      console.log('[server app.post /login] ')
+      res.redirect(200, 'http://'+ip+':8000/home')
+    }else{
+      res.redirect(200, 'http://'+ip+':8000/')
+    }
+  }
+  db.checkLogin(req.body.username, req.body.password, checkLogin)
+})
+
+function checkLogin(check){
+  if(check){
   	res.redirect(200, 'http://'+ip+':8000/home')
   }else{
 	  res.redirect(200, 'http://'+ip+':8000/')
   }
-})
+}
 
 app.get('/home', function(req,res){
 	res.render(__dirname+"/view/home.html", {ip:ip});
@@ -59,7 +71,7 @@ pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   if (err) {throw err}
 
   var option = { key: keys.serviceKey, cert: keys.certificate }
-  console.log('Server Start...!')
+  console.log('[server] Server Start...!')
 
   https.createServer(option, app).listen(5000)
 })

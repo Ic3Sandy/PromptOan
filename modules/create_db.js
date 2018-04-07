@@ -8,7 +8,7 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected Database!");
+  console.log("[Modules Create DB] Connected Database!");
 
   // con.query("DROP DATABASE IF EXISTS mydb", function (err, result) {
   //   if (err) throw err;
@@ -17,6 +17,6 @@ con.connect(function(err) {
 
   con.query("CREATE DATABASE IF NOT EXISTS mydb", function (err, result) {
     if (err) throw err;
-    console.log("Database created: "+result);
+    console.log("[Modules Create DB] Database created");
   });
 });
