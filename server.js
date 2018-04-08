@@ -51,6 +51,10 @@ app.get('/scanqr',function(req,res){
 	res.render(__dirname+"/view/scanqr.html",{ip:ip});
 })
 
+app.get('/scanqr2',function(req,res){
+	res.render(__dirname+"/view/scanqr2.html",{ip:ip});
+})
+
 app.get('/genqr',function(req,res){
 	res.render(__dirname+"/view/genqr.html",{ip:ip});
 })
@@ -68,4 +72,11 @@ pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   console.log('[server] Server Start...!')
 
   https.createServer(option, app).listen(5000)
+})
+
+app.post('/go', function (req, res) {
+  var url = req.body.url;
+  console.log('[server app.post /go] url: '+url)
+  res.redirect(url);
+
 })
