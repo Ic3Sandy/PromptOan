@@ -2,6 +2,7 @@ var https = require('https')
 var http = require('http')
 var pem = require('pem')
 var express = require('express')
+var session = require('express-session')
 var app = express()
 var bodyParser = require('body-parser');
 
@@ -27,12 +28,17 @@ app.get('/login', function (req, res) {
   res.render(__dirname+"/view/login.html", {ip : ip});
 });
 
+app.use(session({secret: 'helloworld'}));//top
+
 app.post('/login', function (req, res) {
   console.log('[server app.post /login] username: '+req.body.username)
   console.log('[server app.post /login] password: '+req.body.password)
-  function checkLogin(check){
+  req.session.username = req.body.username;//top  
+  req.session.password = req.body.password;//top
+   function checkLogin(check){
     if(check){
       console.log('[server app.post /login] ')
+      //res.cookie('rememberme', 'tobi', { expires: new Date(Date.now() + 90000) });
       res.redirect(200, 'http://'+ip+':8000/home')
     }else{
       res.redirect(200, 'http://'+ip+':8000/')
@@ -49,8 +55,14 @@ function checkLogin(check){
   }
 }
 
-app.get('/home', function(req,res){
-	res.render(__dirname+"/view/home.html", {ip:ip});
+app.get('/home', function(req,res){ //top
+  if(req.session.username){
+  	res.render(__dirname+"/view/home.html", {ip:ip});
+    res.end();
+  }else{
+    res.redirect(200, 'http://'+ip+':8000/login');
+    res.end();
+  }
 });
 
 app.get('/scanqr',function(req,res){
