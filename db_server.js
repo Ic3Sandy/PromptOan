@@ -73,10 +73,34 @@ exports.checkSession = function(session, callback) {
 
         if (result.length == 0){
             console.log('[db_server checkSession] Session Incorrect')
-            callback(false)
+            callback(false, null, null, null)
         }else{
-            console.log('[db_server checkSession] Session Correct')
-            callback(true)
+            console.log('[db_server checkSession] Session Correct: '+session)
+            // console.log(result)
+            callback(true, result[0].username, result[0].acc_num, result[0].balance)
         }
     })
+}
+
+exports.transaction = function(session, payer, balance, payee, amount, callback) {
+
+    console.log("[db_server transaction] Transaction!")
+    var balance = balance - amount
+    var sql = 'UPDATE users SET balance = '+mysql.escape(balance)+' WHERE username = ' + mysql.escape(payer)
+    con.query(sql, function (err, result, fields) {
+        if (err) throw err
+    })
+    var sql = 'SELECT * FROM users WHERE username = '+mysql.escape(payee)
+    function upBalance(balance_payee, payee){
+        var sql = 'UPDATE users SET balance = '+mysql.escape(balance_payee)+' WHERE username = ' + mysql.escape(payee)
+        con.query(sql, function (err, result, fields) {
+            if (err) throw err
+        })
+    }
+    con.query(sql, function (err, result, fields) {
+        if (err) throw err
+        var balance_payee = result[0].balance + amount
+        upBalance(balance_payee, payee)
+    })
+    callback()
 }

@@ -11,18 +11,22 @@ var session = require('express-session')
 var get_ipwifi = require('./modules/get_ipwifi.js')
 var ip = get_ipwifi.getIPwifi()
 var db = require('./db_server.js')
+var genqr = require('./modules/genqr.js')
 
 // SETUP Protocol
+var dir_views = __dirname+'/views/'
 var protocol = 'http'
 if (protocol == 'https')
-  var port = 5000
+  var port = 7000
 else
   var port = 8000
+var base_url = protocol+'://'+ip+':'+port
 
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 app.engine('html', require('ejs').renderFile) //support for res.render()
 app.use(cookieParser()) // support for req.cookies
+app.use(express.static('qr-img'))
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
@@ -33,11 +37,11 @@ app.use(session({
 }))
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname+'/view/main.html')
+  res.sendFile(dir_views+'main.html')
 })
 
 app.get('/login', function (req, res) {
-  res.render(__dirname+"/view/login.html", {ip : ip, protocol : protocol, port : port})
+  res.render(dir_views+'login.html')
 })
 
 app.post('/login', function (req, res) {
@@ -46,39 +50,80 @@ app.post('/login', function (req, res) {
   function checkLogin(check, session){
     if(check){
       console.log(session)
-      res.cookie('session', session, { maxAge: 1000 * 60}) // 1 minute
-      res.redirect(protocol+'://'+ip+':'+port+'/home')
+      res.cookie('session', session, { maxAge: 1000 * 60 * 2}) // 2 minute
+      res.redirect(base_url+'/home')
     }else{
-      res.redirect(protocol+'://'+ip+':'+port+'/login')
+      res.redirect(base_url+'/login')
     }
   }
   db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
 })
 
 app.get('/home', function(req,res){
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    res.redirect(base_url+'/login')
+    return
+  }
+
+  function checkSesion(check, username, acc_num, balance){
+    if(check)
+      res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
+    else
+      res.redirect(base_url+'/login')
+  }
+  db.checkSession(req.cookies['session'], checkSesion)
+  
+})
+
+app.get('/scanqr',function(req,res){
+	res.render(dir_views+'scanqr.html', {ip:ip})
+})
+
+app.get('/genqr',function(req,res){
+	res.render(dir_views+'genqr.html')
+})
+
+app.get('/genqr/:payee/:amount',function(req,res){
+  var payee = req.params.payee
+  var amount = parseInt(req.params.amount)
+  console.log('[server app.get /genqr/:payee/:amount] ')
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies))
-    res.redirect(protocol+'://'+ip+':'+port+'/login')
+    res.redirect(base_url+'/login')
   else{
-    function checkSesion(check){
-      if(check)
-        res.render(__dirname+"/view/home.html", {ip:ip})
+    function checkSesion(check, payer, acc_num, balance){
+      if(check && amount <= balance){
+        function done(){
+          res.redirect(base_url+'/home')
+          res.end()
+        }
+        db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
+      }
       else
-        res.redirect(protocol+'://'+ip+':'+port+'/login')
+        res.redirect(base_url+'/home')
     }
     db.checkSession(req.cookies['session'], checkSesion)
   }
 })
 
-app.get('/scanqr',function(req,res){
-	res.render(__dirname+"/view/scanqr.html", {ip:ip})
-})
-
-app.get('/genqr',function(req,res){
-	res.render(__dirname+"/view/genqr.html", {ip:ip})
-})
-
 app.post('/genqr',function(req,res){
-	res.render(__dirname+"/view/qrcode.html", {ip:ip})
+  var amount = req.body.amount
+  if (isNaN(req.body.amount)) {
+    console.log('[server app.post /genqr] This is not number')
+    return
+  }
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    res.redirect(base_url+'/login')
+    return
+  }
+  function checkSesion(check, username, acc_num, balance){
+    if(check){
+      genqr.getqr(base_url+'/genqr/'+username+'/'+amount)
+      res.render(dir_views+'qrcode.html', {amount : amount})
+    }
+    else
+      res.redirect(base_url+'/genqr')
+  }
+  db.checkSession(req.cookies['session'], checkSesion)
 })
 
 
@@ -89,5 +134,5 @@ pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   var option = { key: keys.serviceKey, cert: keys.certificate }
   console.log('[server] Server Start...!')
 
-  https.createServer(option, app).listen(5000)
+  https.createServer(option, app).listen(7000)
 })

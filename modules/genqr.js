@@ -1,6 +1,6 @@
 var QRCode = require('qrcode')
 
-exports.getQR = function(url) {
+exports.getqr = function(url) {
   console.log('Gen QR: '+url)
   QRCode.toFile('./qr-img/qrcode.png', url, {
   margin: 1,
