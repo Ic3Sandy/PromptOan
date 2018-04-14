@@ -14,10 +14,10 @@ var db = require('./db_server.js')
 
 // SETUP Protocol
 var protocol = 'http'
-if (protocol == 'http')
-  var port = 8000
-else
+if (protocol == 'https')
   var port = 5000
+else
+  var port = 8000
 
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies

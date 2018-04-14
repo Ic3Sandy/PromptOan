@@ -1,0 +1,31 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "- [ ] firewall\r - [ ] IDS IPS\r - [ ] VPN\r - [ ] ทำการสร้างหน้า html ให้ครบ\r - [ ] ลิ้งหน้า html ต่างๆเข้ากับ server\r - [ ] ทำหน้า scan qrcode\r - [x] ทำการส่งผ่านค่าจาก server ไป html\r - [ ] สร้าง database ของ user",
+  "main": "server.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "ejs": "^2.5.8",
+    "express-session": "^1.15.6",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0",
+    "node-openvpn": "^0.1.0",
+    "os": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ic3Sandy/MB-PayBank.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ic3Sandy/MB-PayBank/issues"
+  },
+  "homepage": "https://github.com/Ic3Sandy/MB-PayBank#readme"
+}
