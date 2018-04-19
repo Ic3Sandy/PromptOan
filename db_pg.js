@@ -32,8 +32,7 @@ client.query(sql, function (err, result) {
 exports.checkLogin = function(username, password, session, callback) {
     
     console.log("[db_pg checkLogin] Check password!")
-    var sql = 'SELECT * FROM users WHERE username = $1', [username]
-    client.query(sql, function (err, result, fields) {
+    client.query('SELECT * FROM users WHERE username = $1', [username], function (err, result, fields) {
         if (err) throw err
 
         console.log('[db_pg checkLogin] username: '+username)
