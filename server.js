@@ -72,14 +72,15 @@ app.get('/home', function(req,res){
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
     res.redirect(base_url+'/login')
   }
-
-  function checkSesion(check, username, acc_num, balance){
-    if(check)
-      res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
-    else
-      res.redirect(base_url+'/login')
+  else{
+    function checkSesion(check, username, acc_num, balance){
+      if(check)
+        res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
+      else
+        res.redirect(base_url+'/login')
+    }
+    db.checkSession(req.cookies['session'], checkSesion)
   }
-  db.checkSession(req.cookies['session'], checkSesion)
   
 })
 
@@ -123,15 +124,17 @@ app.post('/genqr',function(req,res){
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
     res.redirect(base_url+'/login')
   }
-  function checkSesion(check, username, acc_num, balance){
-    if(check){
-      genqr.getqr(base_url+'/genqr/'+username+'/'+amount)
-      res.render(dir_views+'qrcode.html', {amount : amount})
+  else{
+    function checkSesion(check, username, acc_num, balance){
+      if(check){
+        genqr.getqr(base_url+'/genqr/'+username+'/'+amount)
+        res.render(dir_views+'qrcode.html', {amount : amount})
+      }
+      else
+        res.redirect(base_url+'/genqr')
     }
-    else
-      res.redirect(base_url+'/genqr')
+    db.checkSession(req.cookies['session'], checkSesion)
   }
-  db.checkSession(req.cookies['session'], checkSesion)
 })
 
 app.listen(PORT)
