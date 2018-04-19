@@ -10,17 +10,17 @@ var session = require('express-session')
 // Own Modules
 var get_ipwifi = require('./modules/get_ipwifi.js')
 var ip = get_ipwifi.getIPwifi()
-var db = require('./db_server.js')
+// var db = require('./db_server.js')
 var genqr = require('./modules/genqr.js')
 
 // SETUP Protocol
 var dir_views = __dirname+'/views/'
-var protocol = 'http'
-if (protocol == 'https')
-  var port = 7000
-else
-  var port = 8000
-var base_url = protocol+'://'+ip+':'+port
+var protocol = 'https'
+// if (protocol == 'https')
+//   var port = 7000
+// else
+//   var port = 8000
+// var base_url = protocol+'://'+ip+':'+port
 
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
@@ -56,22 +56,23 @@ app.post('/login', function (req, res) {
       res.redirect(base_url+'/login')
     }
   }
-  db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
+  res.redirect(base_url+'/home')
+  // db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
 })
 
 app.get('/home', function(req,res){
-  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
-    res.redirect(base_url+'/login')
-    return
-  }
+  res.redirect(base_url+'/home')
+  // if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+  //   res.redirect(base_url+'/login')
+  // }
 
-  function checkSesion(check, username, acc_num, balance){
-    if(check)
-      res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
-    else
-      res.redirect(base_url+'/login')
-  }
-  db.checkSession(req.cookies['session'], checkSesion)
+  // function checkSesion(check, username, acc_num, balance){
+  //   if(check)
+  //     res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
+  //   else
+  //     res.redirect(base_url+'/login')
+  // }
+  // db.checkSession(req.cookies['session'], checkSesion)
   
 })
 
@@ -96,12 +97,13 @@ app.get('/genqr/:payee/:amount',function(req,res){
           res.redirect(base_url+'/home')
           res.end()
         }
-        db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
+        // db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
       }
       else
         res.redirect(base_url+'/home')
     }
-    db.checkSession(req.cookies['session'], checkSesion)
+    res.redirect(base_url+'/home')
+    // db.checkSession(req.cookies['session'], checkSesion)
   }
 })
 
@@ -113,7 +115,6 @@ app.post('/genqr',function(req,res){
   }
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
     res.redirect(base_url+'/login')
-    return
   }
   function checkSesion(check, username, acc_num, balance){
     if(check){
@@ -123,16 +124,17 @@ app.post('/genqr',function(req,res){
     else
       res.redirect(base_url+'/genqr')
   }
-  db.checkSession(req.cookies['session'], checkSesion)
+  res.redirect(base_url+'/home')
+  // db.checkSession(req.cookies['session'], checkSesion)
 })
 
+app.listen(5000)
+// http.createServer(app).listen(8000)
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {throw err}
 
-http.createServer(app).listen(8000)
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-  if (err) {throw err}
+//   var option = { key: keys.serviceKey, cert: keys.certificate }
+//   console.log('[server] Server Start...!')
 
-  var option = { key: keys.serviceKey, cert: keys.certificate }
-  console.log('[server] Server Start...!')
-
-  https.createServer(option, app).listen(7000)
-})
+//   https.createServer(option, app).listen(7000)
+// })
