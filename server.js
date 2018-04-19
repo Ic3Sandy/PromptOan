@@ -63,8 +63,7 @@ app.post('/login', function (req, res) {
       res.redirect(base_url+'/login')
     }
   }
-  res.redirect(base_url+'/home')
-  // db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
+  db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
 })
 
 app.get('/home', function(req,res){
