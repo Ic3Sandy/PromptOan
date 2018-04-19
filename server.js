@@ -1,6 +1,3 @@
-//heroku
-const PORT = process.env.PORT || 5000
-
 var https = require('https')
 var http = require('http')
 var pem = require('pem')
@@ -13,24 +10,19 @@ var session = require('express-session')
 // Own Modules
 var get_ipwifi = require('./modules/get_ipwifi.js')
 var ip = get_ipwifi.getIPwifi()
-// var db = require('./db_server.js')
 var genqr = require('./modules/genqr.js')
 
-// SETUP Protocol
-var dir_views = __dirname+'/views/'
-var protocol = 'https'
-// if (protocol == 'https')
-//   var port = 7000
-// else
-//   var port = 8000
-// var base_url = protocol+'://'+ip+':'+port
 
-app.use(bodyParser.json()) // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
-app.engine('html', require('ejs').renderFile) //support for res.render()
-app.use(cookieParser()) // support for req.cookies
-app.use(express.static('qr-img'))
+// SetUp Database
+var db = require('./db_pg.js')
+// var db = require('./db_server.js')
 
+
+// SetUp Port Heroku
+const PORT = process.env.PORT || 5000
+
+
+// SetUp Session
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'secretjs',
@@ -38,6 +30,18 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }))
+
+
+// SetUp Path
+var dir_views = __dirname+'/views/'
+
+
+app.use(bodyParser.json()) // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
+app.engine('html', require('ejs').renderFile) //support for res.render()
+app.use(cookieParser()) // support for req.cookies
+app.use(express.static('qr-img')) // public folder
+
 
 app.get('/', function (req, res) {
   res.sendFile(dir_views+'main.html')

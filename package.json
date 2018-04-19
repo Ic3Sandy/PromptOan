@@ -16,6 +16,7 @@
     "node-openvpn": "^0.1.0",
     "os": "^0.1.1",
     "pem": "^1.12.5",
+    "pg": "^7.4.1",
     "qrcode": "^1.2.0"
   },
   "devDependencies": {},
