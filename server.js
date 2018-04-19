@@ -104,13 +104,13 @@ app.get('/genqr/:payee/:amount',function(req,res){
           res.redirect(base_url+'/home')
           res.end()
         }
-        // db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
+        db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
       }
       else
         res.redirect(base_url+'/home')
     }
     res.redirect(base_url+'/home')
-    // db.checkSession(req.cookies['session'], checkSesion)
+    db.checkSession(req.cookies['session'], checkSesion)
   }
 })
 
@@ -132,16 +132,7 @@ app.post('/genqr',function(req,res){
       res.redirect(base_url+'/genqr')
   }
   res.redirect(base_url+'/home')
-  // db.checkSession(req.cookies['session'], checkSesion)
+  db.checkSession(req.cookies['session'], checkSesion)
 })
 
 app.listen(PORT)
-// http.createServer(app).listen(8000)
-// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-//   if (err) {throw err}
-
-//   var option = { key: keys.serviceKey, cert: keys.certificate }
-//   console.log('[server] Server Start...!')
-
-//   https.createServer(option, app).listen(7000)
-// })

@@ -69,4 +69,23 @@ exports.checkSession = function(session, callback) {
     })
 }
 
+exports.transaction = function(session, payer, balance, payee, amount, callback) {
+
+    console.log("[db_server transaction] Transaction!")
+    var balance = balance - amount
+    client.query('UPDATE users SET balance = $1 WHERE username = $2', [balance, payer], function (err, result, fields) {
+        if (err) throw err
+    })
+    function upBalance(balance_payee, payee){
+        client.query('UPDATE users SET balance = $1 WHERE username = $2', [balance_payee, payee], function (err, result, fields) {
+            if (err) throw err
+        })
+    }
+    client.query('SELECT * FROM users WHERE username = $1', [payee], function (err, result, fields) {
+        if (err) throw err
+        var balance_payee = result['rows'][0].balance + amount
+        upBalance(balance_payee, payee)
+    })
+    callback()
+}
 
