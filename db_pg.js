@@ -37,16 +37,16 @@ exports.checkLogin = function(username, password, session, callback) {
 
         console.log('[db_pg checkLogin] username: '+username)
         console.log('[db_pg checkLogin] password: '+password)
-        console.log(result['rows'][0])
+        console.log('[db_pg checkLogin] result.password: '+result['rows'][0].password)
+        console.log(result['rows'][0].password)
 
-        if (result.length == 0 || result['rows'].password != password){
+        if (result.length == 0 || result['rows'][0].password != password){
             console.log('[db_pg checkLogin] Username or Password Incorrect')
             callback(false, null)
         }
-        else if(result[0].password == password){
+        else if(result['rows'][0].password == password){
             console.log('[db_pg checkLogin] Access Granted')
-            var sql = 'UPDATE users SET session = '+ session +' WHERE username = ' + username
-            client.query(sql, function (err, result) {
+            client.query('UPDATE users SET session = $1 WHERE username = $2', [session, username], function (err, result) {
                 if (err) throw err;
                 console.log(result.affectedRows + " record(s) updated");
             })
