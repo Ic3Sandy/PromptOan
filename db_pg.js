@@ -37,8 +37,6 @@ exports.checkLogin = function(username, password, session, callback) {
 
         console.log('[db_pg checkLogin] username: '+username)
         console.log('[db_pg checkLogin] password: '+password)
-        console.log('[db_pg checkLogin] result.password: '+result['rows'][0].password)
-        console.log(result['rows'][0].password)
 
         if (result.length == 0 || result['rows'][0].password != password){
             console.log('[db_pg checkLogin] Username or Password Incorrect')
@@ -48,9 +46,25 @@ exports.checkLogin = function(username, password, session, callback) {
             console.log('[db_pg checkLogin] Access Granted')
             client.query('UPDATE users SET session = $1 WHERE username = $2', [session, username], function (err, result) {
                 if (err) throw err;
-                console.log(result.affectedRows + " record(s) updated");
             })
             callback(true, session)
+        }
+    })
+}
+
+exports.checkSession = function(session, callback) {
+
+    console.log("[db_server checkSession] Check session!")
+    client.query('SELECT * FROM users WHERE session = $1', [session], function (err, result, fields) {
+        if (err) throw err
+
+        if (result.length == 0){
+            console.log('[db_server checkSession] Session Incorrect')
+            callback(false, null, null, null)
+        }else{
+            console.log('[db_server checkSession] Session Correct: '+session)
+            // console.log(result)
+            callback(true, result['rows'][0].username, result['rows'][0].acc_num, result['rows'][0].balance)
         }
     })
 }

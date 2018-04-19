@@ -68,18 +68,18 @@ app.post('/login', function (req, res) {
 })
 
 app.get('/home', function(req,res){
-  res.redirect(base_url+'/home')
-  // if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
-  //   res.redirect(base_url+'/login')
-  // }
+  
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    res.redirect(base_url+'/login')
+  }
 
-  // function checkSesion(check, username, acc_num, balance){
-  //   if(check)
-  //     res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
-  //   else
-  //     res.redirect(base_url+'/login')
-  // }
-  // db.checkSession(req.cookies['session'], checkSesion)
+  function checkSesion(check, username, acc_num, balance){
+    if(check)
+      res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
+    else
+      res.redirect(base_url+'/login')
+  }
+  db.checkSession(req.cookies['session'], checkSesion)
   
 })
 
