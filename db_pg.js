@@ -12,23 +12,23 @@ function create_tb(){
     client.query(sql, function (err, result) {
     if (err) throw err
     console.log("[db_server] Table created")
-    // insert_info()
+    insert_info()
 })
 }
 
-// function insert_info(){
+function insert_info(){
 
-//     var sql = "INSERT INTO users (acc_num, username, password, balance) VALUES ?";
-//     var values = [
-//         [123, 'foo', 'bar', 500],
-//         [456, 'alice', 'bob', 500],
-//     ]
-//     client.query(sql, [values], function (err, result) {
-//         if (err) throw err
-//     //   console.log("Number of records inserted: " + result.affectedRows);
-//     })
+    var sql = "INSERT INTO users (acc_num, username, password, balance) VALUES ?";
+    var values = [
+        [123, 'foo', 'bar', 500],
+        [456, 'alice', 'bob', 500],
+    ]
+    client.query(sql, [values], function (err, result) {
+        if (err) throw err
+    //   console.log("Number of records inserted: " + result.affectedRows);
+    })
 
-// }
+}
 
 var sql = "DROP TABLE IF EXISTS users"
 client.query(sql, function (err, result) {
