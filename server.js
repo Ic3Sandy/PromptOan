@@ -110,7 +110,6 @@ app.get('/genqr/:payee/:amount',function(req,res){
       else
         res.redirect(base_url+'/home')
     }
-    res.redirect(base_url+'/home')
     db.checkSession(req.cookies['session'], checkSesion)
   }
 })
