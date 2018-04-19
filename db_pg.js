@@ -19,5 +19,6 @@ var sql = "DROP TABLE IF EXISTS users"
 con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("[db_server] Table drop")
+    create_tb()
 })
 
