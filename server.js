@@ -118,7 +118,7 @@ app.post('/genqr',function(req,res){
   var amount = req.body.amount
   if (isNaN(req.body.amount)) {
     console.log('[server app.post /genqr] This is not number')
-    return
+    res.redirect(base_url+'/genqr')
   }
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
     res.redirect(base_url+'/login')
@@ -131,7 +131,6 @@ app.post('/genqr',function(req,res){
     else
       res.redirect(base_url+'/genqr')
   }
-  res.redirect(base_url+'/home')
   db.checkSession(req.cookies['session'], checkSesion)
 })
 
