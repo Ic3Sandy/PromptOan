@@ -37,7 +37,7 @@ exports.checkLogin = function(username, password, session, callback) {
 
         console.log('[db_pg checkLogin] username: '+username)
         console.log('[db_pg checkLogin] password: '+password)
-        console.log('[db_pg checkLogin] result: '+result['rows'])
+        console.log(result['rows'])
 
         if (result.length == 0 || result['rows'].password != password){
             console.log('[db_pg checkLogin] Username or Password Incorrect')

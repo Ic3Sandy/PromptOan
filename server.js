@@ -34,6 +34,7 @@ app.use(session({
 
 // SetUp Path
 var dir_views = __dirname+'/views/'
+var base_url = 'https://mb-paybank.herokuapp.com'
 
 
 app.use(bodyParser.json()) // support json encoded bodies
@@ -60,7 +61,7 @@ app.post('/login', function (req, res) {
       res.cookie('session', session, { maxAge: 1000 * 60 * 2}) // 2 minute
       res.redirect(base_url+'/home')
     }else{
-      res.redirect(base_url+'/login')
+      res.render(dir_views+'login.html')
     }
   }
   db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
