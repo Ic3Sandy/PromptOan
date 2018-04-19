@@ -7,14 +7,14 @@ const client = new Client({
 
 client.connect()
 
-// function create_tb(){
-//     var sql = "CREATE TABLE IF NOT EXISTS users (acc_num INT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), balance INT, session VARCHAR(255))";
-//     client.query(sql, function (err, result) {
-//     if (err) throw err
-//     console.log("[db_server] Table created")
-//     insert_info()
-// })
-// }
+function create_tb(){
+    var sql = "CREATE TABLE IF NOT EXISTS users (acc_num INT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), balance INT, session VARCHAR(255))";
+    client.query(sql, function (err, result) {
+    if (err) throw err
+    console.log("[db_server] Table created")
+    insert_info()
+})
+}
 
 // function insert_info(){
 
@@ -34,7 +34,7 @@ var sql = "DROP TABLE IF EXISTS users"
 client.query(sql, function (err, result) {
     if (err) throw err;
     console.log("[db_server] Table drop")
-    // create_tb()
+    create_tb()
 })
 
 

@@ -10,19 +10,19 @@ var con = mysql.createConnection({
   database: "mydb"
 });
 
-con.connect(function(err) {
+clientconnect(function(err) {
     if (err) throw err
       console.log("Connected Database!");
 })
 
 var sql = "DROP TABLE IF EXISTS users"
-con.query(sql, function (err, result) {
+clientquery(sql, function (err, result) {
     if (err) throw err;
     console.log("[db_server] Table drop")
 })
 
 var sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, acc_num INT, username VARCHAR(255), password VARCHAR(255), balance INT, session VARCHAR(255))";
-con.query(sql, function (err, result) {
+clientquery(sql, function (err, result) {
     if (err) throw err
     console.log("[db_server] Table created")
 })
@@ -32,7 +32,7 @@ var values = [
     [123, 'foo', 'bar', 500],
     [456, 'alice', 'bob', 500],
 ]
-con.query(sql, [values], function (err, result) {
+clientquery(sql, [values], function (err, result) {
     if (err) throw err
 //   console.log("Number of records inserted: " + result.affectedRows);
 })
@@ -41,7 +41,7 @@ exports.checkLogin = function(username, password, session, callback) {
     
     console.log("[db_server checkLogin] Check password!")
     var sql = 'SELECT * FROM users WHERE username = ' + mysql.escape(username)
-    con.query(sql, function (err, result, fields) {
+    clientquery(sql, function (err, result, fields) {
         if (err) throw err
 
         console.log('[db_server checkLogin] username: '+username)
@@ -55,7 +55,7 @@ exports.checkLogin = function(username, password, session, callback) {
         else if(result[0].password == password){
             console.log('[db_server checkLogin] Access Granted')
             var sql = 'UPDATE users SET session = '+mysql.escape(session)+' WHERE username = '+mysql.escape(username)
-            con.query(sql, function (err, result) {
+            clientquery(sql, function (err, result) {
                 if (err) throw err;
                 console.log(result.affectedRows + " record(s) updated");
             })
@@ -68,7 +68,7 @@ exports.checkSession = function(session, callback) {
 
     console.log("[db_server checkSession] Check session!")
     var sql = 'SELECT * FROM users WHERE session = ' + mysql.escape(session)
-    con.query(sql, function (err, result, fields) {
+    clientquery(sql, function (err, result, fields) {
         if (err) throw err
 
         if (result.length == 0){
@@ -87,17 +87,17 @@ exports.transaction = function(session, payer, balance, payee, amount, callback)
     console.log("[db_server transaction] Transaction!")
     var balance = balance - amount
     var sql = 'UPDATE users SET balance = '+mysql.escape(balance)+' WHERE username = ' + mysql.escape(payer)
-    con.query(sql, function (err, result, fields) {
+    clientquery(sql, function (err, result, fields) {
         if (err) throw err
     })
     var sql = 'SELECT * FROM users WHERE username = '+mysql.escape(payee)
     function upBalance(balance_payee, payee){
         var sql = 'UPDATE users SET balance = '+mysql.escape(balance_payee)+' WHERE username = ' + mysql.escape(payee)
-        con.query(sql, function (err, result, fields) {
+        clientquery(sql, function (err, result, fields) {
             if (err) throw err
         })
     }
-    con.query(sql, function (err, result, fields) {
+    clientquery(sql, function (err, result, fields) {
         if (err) throw err
         var balance_payee = result[0].balance + amount
         upBalance(balance_payee, payee)
