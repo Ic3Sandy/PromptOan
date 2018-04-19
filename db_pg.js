@@ -32,7 +32,7 @@ client.query(sql, function (err, result) {
 exports.checkLogin = function(username, password, session, callback) {
     
     console.log("[db_pg checkLogin] Check password!")
-    var sql = 'SELECT * FROM users WHERE username = ' + mysql.escape(username)
+    var sql = 'SELECT * FROM users WHERE username = ' + username
     client.query(sql, function (err, result, fields) {
         if (err) throw err
 
@@ -46,7 +46,7 @@ exports.checkLogin = function(username, password, session, callback) {
         }
         else if(result[0].password == password){
             console.log('[db_pg checkLogin] Access Granted')
-            var sql = 'UPDATE users SET session = '+mysql.escape(session)+' WHERE username = '+mysql.escape(username)
+            var sql = 'UPDATE users SET session = '+ session +' WHERE username = ' + username
             client.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log(result.affectedRows + " record(s) updated");
