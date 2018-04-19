@@ -1,3 +1,6 @@
+//heroku
+const PORT = process.env.PORT || 5000
+
 var https = require('https')
 var http = require('http')
 var pem = require('pem')
@@ -128,7 +131,7 @@ app.post('/genqr',function(req,res){
   // db.checkSession(req.cookies['session'], checkSesion)
 })
 
-app.listen(5000)
+app.listen(PORT)
 // http.createServer(app).listen(8000)
 // pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
 //   if (err) {throw err}
