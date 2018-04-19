@@ -63,8 +63,9 @@ exports.checkSession = function(session, callback) {
             callback(false, null, null, null)
         }else{
             console.log('[db_server checkSession] Session Correct: '+session)
-            // console.log(result)
-            callback(true, result['rows'][0].username, result['rows'][0].acc_num, result['rows'][0].balance)
+            console.log(result['rows'])
+            console.log(result)
+            // callback(true, result['rows'][0].username, result['rows'][0].acc_num, result['rows'][0].balance)
         }
     })
 }
