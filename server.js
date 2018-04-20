@@ -34,7 +34,7 @@ if (PORT != 5000){
   var db = require('./db_pg.js')
 }else{
   var base_url = 'localhost:5000'
-  var db = require('./db_server.js')
+  var db = require('./db_mysql.js')
 }
 
 
