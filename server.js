@@ -13,11 +13,6 @@ var ip = get_ipwifi.getIPwifi()
 var genqr = require('./modules/genqr.js')
 
 
-// SetUp Database
-var db = require('./db_pg.js')
-// var db = require('./db_server.js')
-
-
 // SetUp Port Heroku
 const PORT = process.env.PORT || 5000
 
@@ -32,9 +27,15 @@ app.use(session({
 }))
 
 
-// SetUp Path
+// SetUp Path and Database
 var dir_views = __dirname+'/views/'
-var base_url = 'https://mb-paybank.herokuapp.com'
+if (PORT != 5000){
+  var base_url = 'https://mb-paybank.herokuapp.com'
+  var db = require('./db_pg.js')
+}else{
+  var base_url = 'localhost:5000'
+  var db = require('./db_server.js')
+}
 
 
 app.use(bodyParser.json()) // support json encoded bodies
