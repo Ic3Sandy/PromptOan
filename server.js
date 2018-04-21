@@ -33,7 +33,7 @@ if (PORT != 5000){
   var base_url = 'https://mb-paybank.herokuapp.com'
   var db = require('./db_pg.js')
 }else{
-  var base_url = 'localhost:5000'
+  var base_url = 'http://localhost:5000'
   var db = require('./db_mysql.js')
 }
 
@@ -60,6 +60,7 @@ app.post('/login', function (req, res) {
     if(check){
       console.log(session)
       res.cookie('session', session, { maxAge: 1000 * 60 * 2}) // 2 minute
+      console.log(base_url+'/home')
       res.redirect(base_url+'/home')
     }else{
       res.render(dir_views+'login.html')
@@ -69,7 +70,7 @@ app.post('/login', function (req, res) {
 })
 
 app.get('/home', function(req,res){
-  
+  console.log('/home')
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
     res.redirect(base_url+'/login')
   }
