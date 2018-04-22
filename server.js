@@ -52,8 +52,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/login', function (req, res) {
-  if(Object.keys(req.cookies).length != 0 && ('scanqr' in req.cookies['session'])){
-    res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+  if(Object.keys(req.cookies).length != 0 && ('session' in req.cookies)){
+    if('scanqr' in req.cookies['session'])
+      res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
     res.render(dir_views+'login.html')
   }
   else
