@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 var session = require('express-session')
 
+
 // Own Modules
 var get_ipwifi = require('./modules/get_ipwifi.js')
 var ip = get_ipwifi.getIPwifi()
@@ -42,10 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 app.engine('html', require('ejs').renderFile) //support for res.render()
 app.use(cookieParser()) // support for req.cookies
 
-
  // public folder
 app.use(express.static('qr-img'))
-
+app.use(express.static('assets'))
 
 app.get('/', function (req, res) {
   res.sendFile(dir_views+'main.html')

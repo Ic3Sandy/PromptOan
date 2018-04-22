@@ -2,9 +2,9 @@ var mysql = require('mysql')
 
 var con = mysql.createConnection({
   host: "localhost",
-  user: "ice",
+  user: "ic3",
   password: "qazxsw"
-});
+})
 
 con.connect(function(err) {
   if (err) throw err
@@ -18,5 +18,5 @@ con.connect(function(err) {
   con.query("CREATE DATABASE IF NOT EXISTS mydb", function (err, result) {
     if (err) throw err
     console.log("[Modules Create DB] Database created")
-  });
-});
+  })
+})

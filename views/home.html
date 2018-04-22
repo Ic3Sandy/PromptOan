@@ -2,19 +2,83 @@
 <html>
 <head>
     <title>Home</title>
-</head>
-<body>
-    
-    User : <%=username%>
-    <br>
-    Account Number: <%=acc_num%>
-    <br>
-    Balance : <%=balance%>
-    <br>
+   <meta name="description" content="">
+  <meta name="author" content="">
 
-    <form action="genqr" method="GET">
-        <input type="submit" value="GenQR"  align="right">
-    </form>
+  <!-- Favicons
+      ================================================== -->
+  <link rel="shortcut icon" href="/stylehome/img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/stylehome/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/stylehome/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/stylehome/img/apple-touch-icon-114x114.png">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css"  href="/stylehome/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/stylehome/fonts/font-awesome/css/font-awesome.css">
+
+  <!-- Stylesheet
+      ================================================== -->
+  <link rel="stylesheet" type="text/css"  href="/stylehome/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/stylehome/css/prettyPhoto.css">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <header id="header">
+  <div class="intro text-center">
+    <div class="overlay">
+      <div class="container">
+        <div class="row">
+          <div class="intro-text">
+            <h1>Account</h1>
+            <h1><%=acc_num%></h1>
+            <h2>Your Balance</h2>
+            <p><%=balance%></p>
+            <br>
+            <form action="genqr" method="GET">
+                    <input type="submit" value="Generate Qr-code" class="btn btn-default btn-lg page-scroll" >
+            </form>
+            
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Navigation -->
+<div id="nav">
+  <nav class="navbar navbar-custom">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
+      </div>
+      
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+          <li class="hidden"> <a href="#page-top"></a> </li>
+          <li> <a class="page-scroll" href="#page-top">User : <%=username%></a> </li>
+          <li> <a class="page-scroll" href="#page-top">Home</a> </li>
+          <li> <a class="page-scroll" href="#about">About</a> </li>
+          <li> <a class="page-scroll" href="#contact">Contact</a> </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+    
+<script type="text/javascript" src="/stylehome/js/jquery.1.11.1.js"></script> 
+<script type="text/javascript" src="/stylehome/js/bootstrap.js"></script> 
+<script type="text/javascript" src="/stylehome/js/easypiechart.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.prettyPhoto.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.isotope.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.counterup.js"></script> 
+<script type="text/javascript" src="/stylehome/js/waypoints.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jqBootstrapValidation.js"></script> 
+<script type="text/javascript" src="/stylehome/js/main.js"></script>
+    
 
 </body>
 </html>
