@@ -42,7 +42,10 @@ app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 app.engine('html', require('ejs').renderFile) //support for res.render()
 app.use(cookieParser()) // support for req.cookies
-app.use(express.static('qr-img')) // public folder
+
+
+ // public folder
+app.use(express.static('qr-img'))
 
 
 app.get('/', function (req, res) {
