@@ -5,6 +5,7 @@ body, html {
 	color: #666;
 	width: 100% !important;
 	height: 100% !important;
+	background-color: solid black;
 }
 h1 {
 	font-weight: 700;

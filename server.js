@@ -34,7 +34,7 @@ if (PORT != 5000){
   var base_url = 'https://mb-paybank.herokuapp.com'
   var db = require('./db_pg.js')
 }else{
-  var base_url = 'http://localhost:5000'
+  var base_url = 'http://'+ip+':5000'
   var db = require('./db_mysql.js')
 }
 
