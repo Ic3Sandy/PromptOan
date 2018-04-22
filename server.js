@@ -134,7 +134,7 @@ app.get('/genqr/:payee/:amount',function(req,res){
 
 app.post('/genqr',function(req,res){
   var amount = req.body.amount
-  if (typeof amount != "number") {
+  if (typeof parseInt(amount) != "number") {
     console.log('[server app.post /genqr] This is not number')
     res.redirect(base_url+'/genqr')
   }
