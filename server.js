@@ -33,7 +33,7 @@ if (PORT != 5000){
   var base_url = 'https://mb-paybank.herokuapp.com'
   var db = require('./db_pg.js')
 }else{
-  var base_url = 'http://localhost:5000'
+  var base_url = 'http://'+ip+':5000'
   var db = require('./db_mysql.js')
 }
 
@@ -53,19 +53,27 @@ app.get('/', function (req, res) {
 })
 
 app.get('/login', function (req, res) {
-  res.render(dir_views+'login.html')
+  if(Object.keys(req.cookies).length != 0 && ('scanqr' in req.cookies['session'])){
+    res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+    res.render(dir_views+'login.html')
+  }
+  else
+    res.render(dir_views+'login.html')
 })
 
 app.post('/login', function (req, res) {
   console.log('[server app.post /login] username: '+req.body.username)
   console.log('[server app.post /login] password: '+req.body.password)
   function checkLogin(check, session){
-    if(check){
-      console.log(session)
-      res.cookie('session', session, { maxAge: 1000 * 60 * 2}) // 2 minute
-      console.log(base_url+'/home')
+    if(check && ('session' in req.cookies) && ('scanqr' in req.cookies['session'])){
+      res.cookie('session', {'user':session, 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2}) // 2 minute
       res.redirect(base_url+'/home')
-    }else{
+    }
+    else if(check){
+      res.cookie('session', {'user':session,}, { maxAge: 1000 * 60 * 2}) // 2 minute
+      res.redirect(base_url+'/home')
+    }
+    else{
       res.render(dir_views+'login.html')
     }
   }
@@ -75,22 +83,25 @@ app.post('/login', function (req, res) {
 app.get('/home', function(req,res){
   console.log('/home')
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    console.log('/home no session')
     res.redirect(base_url+'/login')
   }
   else{
     function checkSesion(check, username, acc_num, balance){
-      if(check)
+      console.log('/home checkSesion')
+      if(check && ('scanqr' in req.cookies['session'])){
+        res.cookie('session', {'user':req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
+        res.render(dir_views+'confirm.html', {link : req.cookies['session']['scanqr']})
+      }else if(check)
         res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
-      else
+      else{
+        console.log('/home checkSesion /login')
         res.redirect(base_url+'/login')
+      }
     }
-    db.checkSession(req.cookies['session'], checkSesion)
+    db.checkSession(req.cookies['session']['user'], checkSesion)
   }
   
-})
-
-app.get('/scanqr',function(req,res){
-	res.render(dir_views+'scanqr.html', {ip:ip})
 })
 
 app.get('/genqr',function(req,res){
@@ -101,27 +112,29 @@ app.get('/genqr/:payee/:amount',function(req,res){
   var payee = req.params.payee
   var amount = parseInt(req.params.amount)
   console.log('[server app.get /genqr/:payee/:amount] ')
-  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies))
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    res.cookie('session', {'scanqr': payee+'/'+amount}, { maxAge: 1000 * 60 * 2})
     res.redirect(base_url+'/login')
+  }
   else{
     function checkSesion(check, payer, acc_num, balance){
+      console.log('[server app.get /genqr/:payee/:amount] checkSesion')
       if(check && amount <= balance){
         function done(){
           res.redirect(base_url+'/home')
-          res.end()
         }
-        db.transaction(req.cookies['session'], payer, balance, payee, amount, done)
+        db.transaction(req.cookies['session']['user'], payer, balance, payee, amount, done)
       }
       else
         res.redirect(base_url+'/home')
     }
-    db.checkSession(req.cookies['session'], checkSesion)
+    db.checkSession(req.cookies['session']['user'], checkSesion)
   }
 })
 
 app.post('/genqr',function(req,res){
   var amount = req.body.amount
-  if (isNaN(req.body.amount)) {
+  if (typeof amount != "number") {
     console.log('[server app.post /genqr] This is not number')
     res.redirect(base_url+'/genqr')
   }
@@ -137,7 +150,7 @@ app.post('/genqr',function(req,res){
       else
         res.redirect(base_url+'/genqr')
     }
-    db.checkSession(req.cookies['session'], checkSesion)
+    db.checkSession(req.cookies['session']['user'], checkSesion)
   }
 })
 
