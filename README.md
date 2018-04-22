@@ -3,13 +3,13 @@
 ## List
 
 - [ ] firewall
-- [ ] IDS IPS
+- [ ] [IDS](https://elements.heroku.com/addons/ipinvestigator) IPS
 - [ ] VPN
 - [ ] ทำการสร้างหน้า html ให้ครบ
 - [ ] ลิ้งหน้า html ต่างๆเข้ากับ server
 - [ ] ทำหน้า scan qrcode
 - [x] ทำการส่งผ่านค่าจาก server ไป html
-- [ ] สร้าง database ของ user
+- [x] สร้าง database ของ user
 
 ### Information
 
@@ -20,6 +20,7 @@
 - [การใช้ qrcode ของธนาคารแห่งประเทศไทย](https://www.bot.or.th/Thai/PaymentSystems/FinTech/Pages/default.aspx)
 - [blognone มาตรฐานการจ่ายเงินด้วย QR](https://www.blognone.com/node/94042)
 - [QR Code มาตรฐาน](https://thestandard.co/standardqrcode/)
+- [Service กับ heroku](https://elements.heroku.com/addons)
 
 ### Mumber
 
