@@ -5,8 +5,8 @@ var create_db = require('./modules/create_db.js')
 
 var client = mysql.createConnection({
   host: "localhost",
-  user: "ic3",
-  password: "qazxsw",
+  user: "root",
+  password: "jjayz8216",
   database: "mydb"
 });
 
@@ -57,9 +57,10 @@ exports.checkLogin = function(username, password, session, callback) {
             var sql = 'UPDATE users SET session = '+mysql.escape(session)+' WHERE username = '+mysql.escape(username)
             client.query(sql, function (err, result) {
                 if (err) throw err;
-                console.log(result.affectedRows + " record(s) updated");
+                console.log(result.affectedRows + " record(s) updated")
+                callback(true, session)
             })
-            callback(true, session)
+            
         }
     })
 }
