@@ -2,9 +2,16 @@ var mysql = require('mysql')
 
 var con = mysql.createConnection({
   host: "localhost",
+<<<<<<< HEAD
   user: "ic3",
   password: "qazxsw"
 });
+=======
+  user: "root",
+  password: "123456"
+})
+>>>>>>> origin/dev_ktop
+
 
 con.connect(function(err) {
   if (err) throw err
