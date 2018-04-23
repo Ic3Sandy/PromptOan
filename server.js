@@ -57,33 +57,45 @@ app.get('/login', function (req, res) {
     res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
     res.render(dir_views+'login.html')
   }
-  else
+  else{
+    console.log('[server app.get /login] else: dir_views')
     res.render(dir_views+'login.html')
+  }
 })
 
 app.post('/login', function (req, res) {
   console.log('[server app.post /login] username: '+req.body.username)
   console.log('[server app.post /login] password: '+req.body.password)
-  function checkLogin(check, session){
-    if(check && ('session' in req.cookies) && ('scanqr' in req.cookies['session'])){
-      res.cookie('session', {'user':session, 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2}) // 2 minute
-      res.redirect(base_url+'/home')
-    }
-    else if(check){
-      res.cookie('session', {'user':session,}, { maxAge: 1000 * 60 * 2}) // 2 minute
-      res.redirect(base_url+'/home')
-    }
-    else{
-      res.render(dir_views+'login.html')
-    }
+  console.log(req.body)
+  if(!('username' in req.body && 'password' in req.body)){
+    console.log('[server app.post /login] if &&: ')
+    res.redirect(base_url+'/login')
   }
-  db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
+  else{
+    function checkLogin(check, session){
+      if(check && ('session' in req.cookies) && ('scanqr' in req.cookies['session'])){
+        res.cookie('session', {'user':session, 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2}) // 2 minute
+        res.redirect(base_url+'/home')
+      }
+      else if(check){
+        console.log('[server app.post /login] session: '+session)
+        res.cookie('session', {'user':session}, { maxAge: 1000 * 60 * 2}) // 2 minute
+        res.redirect(base_url+'/home')
+      }
+      else{
+        res.redirect(base_url+'/login')
+      }
+    }
+    db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
+  }
 })
 
 app.get('/home', function(req,res){
   console.log('/home')
+  console.log(req.cookies)
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
-    console.log('/home no session')
+    console.log('/home no session (req.cookies).length: '+ Object.keys(req.cookies).length)
+    console.log('/home no session !in req.cookies: '+!('session' in req.cookies))
     res.redirect(base_url+'/login')
   }
   else{
@@ -92,8 +104,10 @@ app.get('/home', function(req,res){
       if(check && ('scanqr' in req.cookies['session'])){
         res.cookie('session', {'user':req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
         res.render(dir_views+'confirm.html', {link : req.cookies['session']['scanqr']})
-      }else if(check)
+      }else if(check){
+        console.log('/home dir_views home.html')
         res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
+      }
       else{
         console.log('/home checkSesion /login')
         res.redirect(base_url+'/login')
