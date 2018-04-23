@@ -206,6 +206,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
   background-color: #e6e6e6;
   border: 1px solid transparent;
   border-radius: 3px;
+  align-items: center;
 }
 
 
@@ -235,7 +236,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
   pointer-events: none;
   border: 1px solid #827ffe;
   border-radius: 3px;
-
+  align-items: center;
   visibility: hidden;
   opacity: 0;
 
@@ -336,6 +337,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+  align-content: center;
 }
 
 .login100-form-btn {
@@ -373,7 +375,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
 [ Alert validate ]*/
 
 .validate-input {
-  position: relative;
+  /*position: relative;*/
+  position: center;
 }
 
 .alert-validate::before {

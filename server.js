@@ -1,6 +1,7 @@
+var https = require('https')
+var http = require('http')
 var pem = require('pem')
 var express = require('express')
-var session = require('express-session')
 var app = express()
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
@@ -45,16 +46,15 @@ app.use(cookieParser()) // support for req.cookies
 
  // public folder
 app.use(express.static('qr-img'))
-app.use(express.static('assets'))
+app.use(express.static('assets '))
 
 app.get('/', function (req, res) {
   res.sendFile(dir_views+'main.html')
 })
 
 app.get('/login', function (req, res) {
-  if(Object.keys(req.cookies).length != 0 && ('session' in req.cookies)){
-    if('scanqr' in req.cookies['session'])
-      res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+  if(Object.keys(req.cookies).length != 0 && ('scanqr' in req.cookies['session'])){
+    res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
     res.render(dir_views+'login.html')
   }
   else
@@ -134,7 +134,7 @@ app.get('/genqr/:payee/:amount',function(req,res){
 
 app.post('/genqr',function(req,res){
   var amount = req.body.amount
-  if (typeof parseInt(amount) != "number") {
+  if (typeof amount != "number") {
     console.log('[server app.post /genqr] This is not number')
     res.redirect(base_url+'/genqr')
   }
