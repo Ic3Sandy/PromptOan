@@ -82,25 +82,32 @@ exports.checkSession = function(session, callback) {
     })
 }
 
-exports.transaction = function(session, payer, balance, payee, amount, callback) {
+exports.transaction = function(session, payer, balance, acc_num, amount, callback) {
 
     console.log("[db_mysql transaction] Transaction!")
     var balance = balance - amount
+    console.log("[db_mysql transaction] balance: "+balance)
     var sql = 'UPDATE users SET balance = '+mysql.escape(balance)+' WHERE username = ' + mysql.escape(payer)
+    console.log(sql)
     client.query(sql, function (err, result, fields) {
         if (err) throw err
     })
-    var sql = 'SELECT * FROM users WHERE username = '+mysql.escape(payee)
-    function upBalance(balance_payee, payee){
-        var sql = 'UPDATE users SET balance = '+mysql.escape(balance_payee)+' WHERE username = ' + mysql.escape(payee)
+    var sql = 'SELECT * FROM users WHERE acc_num = '+mysql.escape(acc_num)
+    console.log(sql)
+    function upBalance(balance_payee, acc_num){
+        var sql = 'UPDATE users SET balance = '+mysql.escape(balance_payee)+' WHERE acc_num = ' + mysql.escape(acc_num)
+        console.log(sql)
         client.query(sql, function (err, result, fields) {
             if (err) throw err
         })
     }
     client.query(sql, function (err, result, fields) {
         if (err) throw err
+        console.log(result)
+        console.log('amount: '+amount)
         var balance_payee = result[0].balance + amount
-        upBalance(balance_payee, payee)
+        console.log('balance_payee: '+balance_payee)
+        upBalance(balance_payee, acc_num)
     })
     callback()
 }
