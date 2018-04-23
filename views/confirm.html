@@ -49,15 +49,13 @@
           <h1><%=acc_num%></h1>
         </span>
           
-         
-        <div class="container-login100-form-btn m-t-17" >
-            <form action='genqr/<%=link%>' method="GET">
-                <input type="submit" value="Confirm!" class="login100-form-btn"> 
-            </form>
-          <br>
-          <form action="home" method="GET">
-            <input type="submit" value="Cancel" class="login100-form-btn"> 
-            </form>
+        
+        <div class="container-login100-form-btn m-t-17">
+                
+          <input type="button" value="Confirm" class="login100-form-btn m-r-10" onclick="window.location.href='genqr/<%=link%>'" 
+              style="width: 47%">
+          <input type="submit" value="Cancel" class="login100-form-btn m-l-10" style="width: 47%" onclick="window.location.href='home'">
+
         </div>
 					
 			</div>

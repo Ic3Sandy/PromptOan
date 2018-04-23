@@ -48,18 +48,22 @@ app.use(express.static('qr-img'))
 app.use(express.static('assets'))
 
 app.get('/', function (req, res) {
+  res.clearCookie('session')
   res.sendFile(dir_views+'main.html')
 })
 
 app.get('/login', function (req, res) {
   if(Object.keys(req.cookies).length != 0 && ('session' in req.cookies)){
     console.log('[server app.get /login] 1')
-    if('scanqr' in req.cookies['session']){
+    if('user' in req.cookies['session']){
+      console.log('[server app.get /login] 3')
+      res.redirect(base_url+'/home')
+    }
+    else if('scanqr' in req.cookies['session']){
       console.log('[server app.get /login] 2')
       res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+      res.render(dir_views+'login.html')
     }
-    console.log('[server app.get /login] 3')
-    res.render(dir_views+'login.html')
   }
   else{
     console.log('[server app.get /login] 4')
@@ -104,15 +108,16 @@ app.get('/home', function(req,res){
       if(check && ('scanqr' in req.cookies['session'])){
         var str = req.cookies['session']['scanqr']
         str = str.split("/")
-        res.cookie('session', {'user':req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
+        res.cookie('session', {'user':req.cookies['session']['user'], 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
         res.render(dir_views+'confirm.html', {link : req.cookies['session']['scanqr'], acc_num : str[0], amount : str[1]})
-      }else if(check){
+      }else if(check){ 
         console.log(req.cookies)
         console.log('/home dir_views home.html')
         res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
       }
       else{
         console.log('/home checkSesion /login')
+        res.clearCookie('session')
         res.redirect(base_url+'/login')
       }
     }
@@ -134,22 +139,24 @@ app.get('/genqr/:acc_num/:amount',function(req,res){
     res.cookie('session', {'scanqr': acc_num+'/'+amount}, { maxAge: 1000 * 60 * 2})
     res.redirect(base_url+'/login')
   }
-  else if('scanqr' in req.cookies['session']){
-    console.log('[server app.get /genqr/:acc_num/:amount] ****')
-    res.cookie('session', {'user':req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
-    res.render(dir_views+'confirm.html', {link : acc_num+'/'+amount, acc_num : acc_num, amount : amount})
+  else if(('session' in req.cookies) && ('user' in req.cookies['session'] && !('scanqr' in req.cookies['session']))){
+    res.cookie('session', {'user':req.cookies['session']['user'], 'scanqr': acc_num+'/'+amount}, { maxAge: 1000 * 60 * 2})
+    res.redirect(base_url+'/home')
   }
   else{
     function checkSesion(check, payer, acc_payer, balance){
       console.log('[server app.get /genqr/:acc_num/:amount] 4')
       if(check && amount <= balance){
         function done(){
+          res.cookie('session', {'user': req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
           res.redirect(base_url+'/home')
         }
         db.transaction(req.cookies['session']['user'], payer, balance, acc_num, amount, done)
       }
-      else
+      else{
+        res.cookie('session', {'user': req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
         res.redirect(base_url+'/home')
+      }
     }
     db.checkSession(req.cookies['session']['user'], checkSesion)
   }
