@@ -39,24 +39,24 @@ client.query(sql, [values], function (err, result) {
 
 exports.checkLogin = function(username, password, session, callback) {
     
-    console.log("[db_mysql checkLogin] Check password!")
+    // console.log("[db_mysql checkLogin] Check password!")
     var sql = 'SELECT * FROM users WHERE username = ' + mysql.escape(username)
     client.query(sql, function (err, result, fields) {
         if (err) throw err
 
-        console.log('[db_mysql checkLogin] username: '+username)
-        console.log('[db_mysql checkLogin] password: '+password)
+        // console.log('[db_mysql checkLogin] username: '+username)
+        // console.log('[db_mysql checkLogin] password: '+password)
 
         if (result.length == 0 || result[0].password != password){
-            console.log('[db_mysql checkLogin] Username or Password Incorrect')
+            // console.log('[db_mysql checkLogin] Username or Password Incorrect')
             callback(false, null)
         }
         else if(result[0].password == password){
-            console.log('[db_mysql checkLogin] Access Granted')
+            // console.log('[db_mysql checkLogin] Access Granted')
             var sql = 'UPDATE users SET session = '+mysql.escape(session)+' WHERE username = '+mysql.escape(username)
             client.query(sql, function (err, result) {
                 if (err) throw err;
-                console.log(result.affectedRows + " record(s) updated")
+                // console.log(result.affectedRows + " record(s) updated")
                 callback(true, session)
             })
             
@@ -66,16 +66,16 @@ exports.checkLogin = function(username, password, session, callback) {
 
 exports.checkSession = function(session, callback) {
 
-    console.log("[db_mysql checkSession] Check session!")
+    // console.log("[db_mysql checkSession] Check session!")
     var sql = 'SELECT * FROM users WHERE session = ' + mysql.escape(session)
     client.query(sql, function (err, result, fields) {
         if (err) throw err
 
         if (result.length == 0){
-            console.log('[db_mysql checkSession] Session Incorrect')
+            // console.log('[db_mysql checkSession] Session Incorrect')
             callback(false, null, null, null)
         }else{
-            console.log('[db_mysql checkSession] Session Correct: '+session)
+            // console.log('[db_mysql checkSession] Session Correct: '+session)
             // console.log(result)
             callback(true, result[0].username, result[0].acc_num, result[0].balance)
         }
@@ -84,29 +84,29 @@ exports.checkSession = function(session, callback) {
 
 exports.transaction = function(session, payer, balance, acc_num, amount, callback) {
 
-    console.log("[db_mysql transaction] Transaction!")
+    // console.log("[db_mysql transaction] Transaction!")
     var balance = balance - amount
-    console.log("[db_mysql transaction] balance: "+balance)
+    // console.log("[db_mysql transaction] balance: "+balance)
     var sql = 'UPDATE users SET balance = '+mysql.escape(balance)+' WHERE username = ' + mysql.escape(payer)
-    console.log(sql)
+    // console.log(sql)
     client.query(sql, function (err, result, fields) {
         if (err) throw err
     })
     var sql = 'SELECT * FROM users WHERE acc_num = '+mysql.escape(acc_num)
-    console.log(sql)
+    // console.log(sql)
     function upBalance(balance_payee, acc_num){
         var sql = 'UPDATE users SET balance = '+mysql.escape(balance_payee)+' WHERE acc_num = ' + mysql.escape(acc_num)
-        console.log(sql)
+        // console.log(sql)
         client.query(sql, function (err, result, fields) {
             if (err) throw err
         })
     }
     client.query(sql, function (err, result, fields) {
         if (err) throw err
-        console.log(result)
-        console.log('amount: '+amount)
+        // console.log(result)
+        // console.log('amount: '+amount)
         var balance_payee = result[0].balance + amount
-        console.log('balance_payee: '+balance_payee)
+        // console.log('balance_payee: '+balance_payee)
         upBalance(balance_payee, acc_num)
     })
     callback()

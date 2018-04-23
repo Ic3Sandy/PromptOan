@@ -1,25 +1,80 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>Confirm</title>
+    <title>confirm</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->	
+    <link rel="icon" type="image/png" href="stylehome/images/icons/favicon.ico"/>
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animate/animate.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/css/util.css">
+    <link rel="stylesheet" type="text/css" href="stylehome/css/main.css">
+  <!--===============================================================================================-->
 </head>
+<div class="limiter">
+  <div class="transparent">
+    <div class="container-home100">
+      <div class="wrap-home100 p-t-50 p-b-50 p-l-10 p-r-10">
 
-<body>
-    <h1>confirm</h1>
-    <br>
-    <%=amount%>
-    <br>
-    <%=acc_num%>
-    <br>
-	<form action='genqr/<%=link%>' method="GET">
-        <input type="submit" value="Confirm" align="left">
-    </form>
-    <br>
-    <form>
-        <input type="button" value="Cancel!" onclick="window.location.href='home'" />
-    </form> 
-	
+        <span class="home100-form-title p-b-20">
+          <h1>Amount</h1>
+        </span>
+
+        <span class="home100-form-value p-b-50">
+          <h2><%=amount%></h2>
+        </span>
+         
+
+        <span class="home100-form-title p-b-20">
+          <h1>Account Number</h1>
+        </span>
+        
+        <span class="home100-form-value p-b-50">
+          <h1><%=acc_num%></h1>
+        </span>
+          
+         
+        <div class="container-login100-form-btn m-t-17" >
+            <form action='genqr/<%=link%>' method="GET">
+                <input type="submit" value="Confirm!" class="login100-form-btn"> 
+            </form>
+          <br>
+          <form action="home" method="GET">
+            <input type="submit" value="Cancel" class="login100-form-btn"> 
+            </form>
+        </div>
+					
+			</div>
+		</div>
+	</div>
+</div>       
+ 
+<script type="text/javascript" src="/stylehome/js/jquery.1.11.1.js"></script> 
+<script type="text/javascript" src="/stylehome/js/bootstrap.js"></script> 
+<script type="text/javascript" src="/stylehome/js/easypiechart.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.prettyPhoto.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.isotope.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.counterup.js"></script> 
+<script type="text/javascript" src="/stylehome/js/waypoints.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jqBootstrapValidation.js"></script> 
+<script type="text/javascript" src="/stylehome/js/main.js"></script>
+    
+
 </body>
-
 </html>
