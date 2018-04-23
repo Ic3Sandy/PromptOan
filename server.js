@@ -30,7 +30,7 @@ app.use(session({
 // SetUp Path and Database
 var dir_views = __dirname+'/views/'
 if (PORT != 5000){
-  var base_url = 'https://mb-paybank.herokuapp.com'
+  var base_url = 'https://promptoan.herokuapp.com'
   var db = require('./db_pg.js')
 }else{
   var base_url = 'http://'+ip+':5000'
