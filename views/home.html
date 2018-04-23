@@ -1,24 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>home</title>
+    <title>login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->	
+    <link rel="icon" type="image/png" href="stylehome/images/icons/favicon.ico"/>
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animate/animate.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/css/util.css">
+    <link rel="stylesheet" type="text/css" href="stylehome/css/main.css">
+  <!--===============================================================================================-->
 </head>
-<body>
+<div class="limiter">
+  <div class="transparent">
+    <div class="container-home100">
+      <div class="wrap-home100 p-t-50 p-b-50 p-l-10 p-r-10">
+
+        <span class="home100-form-title p-b-20">
+          <h1>Account</h1>
+        </span>
+
+        <span class="home100-form-value p-b-50">
+          <h1 ><%=acc_num%></h1>
+        </span>
+         
+
+        <span class="home100-form-title p-b-20">
+          <h1>Your Balance</h1>
+        </span>
+        
+        <span class="home100-form-value p-b-50">
+          <h1><%=balance%></h1>
+        </span>
+          
+         
+        <div class="container-login100-form-btn m-t-17" >
+          <form action="genqr" method="GET">
+          <input type="submit" value="Generate Qr-code" class="login100-form-btn"  > 
+          </form>
+        </div>
+					
+			</div>
+		</div>
+	</div>
+</div>       
+            
+            
+  
+</header>
+<!-- Navigation -->
+<div id="nav">
+  <nav class="navbar navbar-custom">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
+      </div>
+      
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+          <li class="hidden"> <a href="#page-top"></a> </li>
+          <li> <a class="page-scroll" href="#page-top">User : <%=username%></a> </li>
+          <li> <a class="page-scroll" href="#page-top">Home</a> </li>
+          <li> <a class="page-scroll" href="#about">About</a> </li>
+          <li> <a class="page-scroll" href="#contact">Contact</a> </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
     
-    User : <%=username%>
-    <br>
-    Account Number: <%=acc_num%>
-    <br>
-    Balance : <%=balance%>
-    <br>
-
-    <form action="scanqr" method="GET">
-        <input type="submit" value="Scan" align="left">
-    </form>
-
-    <form action="genqr" method="GET">
-        <input type="submit" value="GenQR"  align="right">
-    </form>
+<script type="text/javascript" src="/stylehome/js/jquery.1.11.1.js"></script> 
+<script type="text/javascript" src="/stylehome/js/bootstrap.js"></script> 
+<script type="text/javascript" src="/stylehome/js/easypiechart.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.prettyPhoto.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.isotope.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jquery.counterup.js"></script> 
+<script type="text/javascript" src="/stylehome/js/waypoints.js"></script> 
+<script type="text/javascript" src="/stylehome/js/jqBootstrapValidation.js"></script> 
+<script type="text/javascript" src="/stylehome/js/main.js"></script>
+    
 
 </body>
 </html>

@@ -18,5 +18,5 @@ con.connect(function(err) {
   con.query("CREATE DATABASE IF NOT EXISTS mydb", function (err, result) {
     if (err) throw err
     console.log("[Modules Create DB] Database created")
-  });
-});
+  })
+})

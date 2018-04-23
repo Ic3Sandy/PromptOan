@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Confirm</title>
+</head>
+
+<body>
+    <h1>confirm</h1>
+    <br>
+    <%=amount%>
+    <br>
+    <%=acc_num%>
+    <br>
+	<form action='genqr/<%=link%>' method="GET">
+        <input type="submit" value="Confirm" align="left">
+    </form>
+    <br>
+    <form>
+        <input type="button" value="Cancel!" onclick="window.location.href='home'" />
+    </form> 
+	
+</body>
+
+</html>
