@@ -2,48 +2,68 @@
 <html>
 <head>
     <title>home</title>
-   <meta name="description" content="">
-  <meta name="author" content="">
-
-  <!-- Favicons
-      ================================================== -->
-  <link rel="shortcut icon" href="/stylehome/img/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="/stylehome/img/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/stylehome/img/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/stylehome/img/apple-touch-icon-114x114.png">
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css"  href="/stylehome/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="/stylehome/fonts/font-awesome/css/font-awesome.css">
-
-  <!-- Stylesheet
-      ================================================== -->
-  <link rel="stylesheet" type="text/css"  href="/stylehome/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/stylehome/css/prettyPhoto.css">
-  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <title>login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->	
+    <link rel="icon" type="image/png" href="stylehome/images/icons/favicon.ico"/>
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animate/animate.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="stylehome/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylehome/css/util.css">
+    <link rel="stylesheet" type="text/css" href="stylehome/css/main.css">
+  <!--===============================================================================================-->
 </head>
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-    <header id="header">
-  <div class="intro text-center">
-    <div class="overlay">
-      <div class="container">
-        <div class="row">
-          <div class="intro-text">
-            <h1>Account</h1>
-            <h1><%=acc_num%></h1>
-            <h2>Your Balance</h2>
-            <p><%=balance%></p>
-            <br>
-            <form action="genqr" method="GET">
-                    <input type="submit" value="Generate Qr-code" class="btn btn-default btn-lg page-scroll" >
-            </form>
-            
-            </div>
+<div class="limiter">
+  <div class="transparent">
+    <div class="container-home100">
+      <div class="wrap-home100 p-t-50 p-b-50 p-l-10 p-r-10">
+
+        <span class="home100-form-title p-b-20">
+          <h1>Account</h1>
+        </span>
+
+        <span class="home100-form-value p-b-50">
+          <h1 ><%=acc_num%></h1>
+        </span>
+         
+
+        <span class="home100-form-title p-b-20">
+          <h1>Your Balance</h1>
+        </span>
+        
+        <span class="home100-form-value p-b-50">
+          <h1><%=balance%></h1>
+        </span>
+          
+         
+        <div class="container-login100-form-btn m-t-17" >
+          <form action="genqr" method="GET">
+          <input type="submit" value="Generate Qr-code" class="login100-form-btn"  > 
+          </form>
         </div>
-      </div>
-    </div>
-  </div>
+					
+			</div>
+		</div>
+	</div>
+</div>       
+            
+            
+  
 </header>
 <!-- Navigation -->
 <div id="nav">
