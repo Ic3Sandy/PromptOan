@@ -4,7 +4,8 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "ic3",
   password: "qazxsw"
-});
+})
+
 
 con.connect(function(err) {
   if (err) throw err
