@@ -21,7 +21,8 @@
     "pem": "^1.12.5",
     "pg": "^7.4.1",
     "popper.js": "^1.14.3",
-    "qrcode": "^1.2.0"
+    "qrcode": "^1.2.0",
+    "request": "^2.85.0"
   },
   "devDependencies": {},
   "scripts": {
