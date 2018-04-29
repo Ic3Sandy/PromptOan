@@ -5,14 +5,14 @@ var create_db = require('./modules/create_db.js')
 
 var client = mysql.createConnection({
   host: "localhost",
-  user: "ic3",
-  password: "qazxsw",
+  user: "sorawid",
+  password: "staticeuoV5WZ",
   database: "mydb"
 });
 
 client.connect(function(err) {
     if (err) throw err
-      console.log("Connected Database!");
+    console.log("Connected Database!");
 })
 
 var sql = "DROP TABLE IF EXISTS users"
