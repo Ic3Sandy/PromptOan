@@ -5,8 +5,8 @@ var create_db = require('./modules/create_db.js')
 
 var client = mysql.createConnection({
   host: "localhost",
-  user: "sorawid",
-  password: "staticeuoV5WZ",
+  user: "ic3",
+  password: "qazxsw",
   database: "mydb"
 });
 
