@@ -1,17 +1,22 @@
-# Project Network Secure
+# Project part of the network security course
 
-## List
+## TODO List
 
-- [ ] firewall
-- [ ] [IDS](https://elements.heroku.com/addons/ipinvestigator) IPS
-- [ ] VPN
+~~- [ ] firewall~~ **_based on Heroku_**
+
+~~- [ ] [IDS](https://elements.heroku.com/addons/ipinvestigator) IPS~~ **_based on Heroku_**
+
+~~- [ ] VPN~~ **_based on Heroku_**
+
 - [x] ทำการสร้างหน้า html ให้ครบ
 - [x] ลิ้งหน้า html ต่างๆเข้ากับ server
 
-~~- [ ] ทำหน้า scan qrcode~~
+~~- [ ] ทำหน้า scan qrcode~~ **_ใช้ application ของอะไรก็ได้_**
 
 - [x] ทำการส่งผ่านค่าจาก server ไป html
 - [x] สร้าง database ของ user
+- [ ] Project report
+- [ ] Slide presentation
 
 ### Information
 

@@ -55,75 +55,89 @@ app.use(express.static('qr-img'))
 app.use(express.static('assets'))
 
 app.get('/', function (req, res) {
+
+  console.log("[Main...]")
+
   res.clearCookie('session')
   res.sendFile(dir_views+'main.html')
 })
 
 app.get('/login', function (req, res) {
+
+  console.log("[Login]")
+
   if(Object.keys(req.cookies).length != 0 && ('session' in req.cookies)){
-    console.log('[server app.get /login] 1')
-    if('user' in req.cookies['session']){
-      console.log('[server app.get /login] 3')
+
+    if('user' in req.cookies['session'])
       res.redirect(base_url+'/home')
-    }
+    
     else if('scanqr' in req.cookies['session']){
-      console.log('[server app.get /login] 2')
-      res.cookie('session', {'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+
+      console.log("[Login from QRcode]")
+
+      res.cookie('session', { 'scanqr' : req.cookies['session']['scanqr'] }, { maxAge: 1000 * 60 * 2 })
       res.render(dir_views+'login.html')
     }
   }
-  else{
-    console.log('[server app.get /login] 4')
+
+  else
     res.render(dir_views+'login.html')
-  }
 })
 
 app.post('/login', function (req, res) {
-  if(!('username' in req.body && 'password' in req.body)){
-    console.log('[server app.post /login] 1')
+
+  if(!('username' in req.body && 'password' in req.body))
     res.redirect(base_url+'/login')
-  }
+  
   else{
     function checkLogin(check, session){
+
+      console.log("[Login checkLogin]")
+
       if(check && ('session' in req.cookies) && ('scanqr' in req.cookies['session'])){
-        res.cookie('session', {'user':session, 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2}) // 2 minute
+        res.cookie('session', {'user' : session, 'scanqr' : req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2 }) // 2 minute
         res.redirect(base_url+'/home')
       }
       else if(check){
-        res.cookie('session', {'user':session}, { maxAge: 1000 * 60 * 2}) // 2 minute
+        res.cookie('session', {'user' : session}, { maxAge: 1000 * 60 * 2 }) // 2 minute
         res.redirect(base_url+'/home')
       }
       else{
         res.redirect(base_url+'/login')
       }
     }
+
     db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
   }
 })
 
 app.get('/home', function(req,res){
-  console.log('/home')
-  console.log(req.cookies)
-  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
-    console.log('/home no session (req.cookies).length: '+ Object.keys(req.cookies).length)
-    console.log('/home no session !in req.cookies: '+!('session' in req.cookies))
+
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies))
     res.redirect(base_url+'/login')
-  }
+  
   else{
     function checkSesion(check, username, acc_num, balance){
-      console.log('/home checkSesion')
+
+      console.log("[Home checkSesion]")
+
       if(check && ('scanqr' in req.cookies['session'])){
+        
         var str = req.cookies['session']['scanqr']
         str = str.split("/")
-        res.cookie('session', {'user':req.cookies['session']['user'], 'scanqr':req.cookies['session']['scanqr']}, { maxAge: 1000 * 60 * 2})
+
+        res.cookie('session', {'user' : req.cookies['session']['user'], 'scanqr' : req.cookies['session']['scanqr']}, { maxAge : 1000 * 60 * 2 })
+        
+        console.log("[Home Confirm!]")
         res.render(dir_views+'confirm.html', {link : req.cookies['session']['scanqr'], acc_num : str[0], amount : str[1]})
-      }else if(check){ 
-        console.log(req.cookies)
-        console.log('/home dir_views home.html')
+      }
+
+      else if(check){
+        console.log("[Username login]: "+username)
         res.render(dir_views+'home.html', {username : username, acc_num : acc_num, balance : balance})
       }
+
       else{
-        console.log('/home checkSesion /login')
         res.clearCookie('session')
         res.redirect(base_url+'/login')
       }
@@ -134,58 +148,78 @@ app.get('/home', function(req,res){
 })
 
 app.get('/genqr',function(req,res){
-	res.render(dir_views+'genqr.html')
+
+  console.log("[Generate Qrcode!]")
+
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies))
+    res.redirect(base_url+'/login')
+  else
+    res.render(dir_views+'genqr.html')
+    
 })
 
-app.get('/genqr/:acc_num/:amount',function(req,res){
-  var acc_num = req.params.acc_num
-  var amount = parseInt(req.params.amount)
-  console.log('[server app.get /genqr/:acc_num/:amount] 1')
-  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
-    console.log('[server app.get /genqr/:acc_num/:amount] 2')
-    res.cookie('session', {'scanqr': acc_num+'/'+amount}, { maxAge: 1000 * 60 * 2})
+app.post('/genqr',function(req,res){
+
+  var amount = req.body.amount
+
+  if(typeof parseInt(amount) != "number")
+    res.redirect(base_url+'/genqr')
+  
+  if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies))
     res.redirect(base_url+'/login')
-  }
-  else if(('session' in req.cookies) && ('user' in req.cookies['session'] && !('scanqr' in req.cookies['session']))){
-    res.cookie('session', {'user':req.cookies['session']['user'], 'scanqr': acc_num+'/'+amount}, { maxAge: 1000 * 60 * 2})
-    res.redirect(base_url+'/home')
-  }
+  
   else{
-    function checkSesion(check, payer, acc_payer, balance){
-      console.log('[server app.get /genqr/:acc_num/:amount] 4')
-      if(check && amount <= balance){
-        function done(){
-          res.cookie('session', {'user': req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
-          res.redirect(base_url+'/home')
-        }
-        db.transaction(req.cookies['session']['user'], payer, balance, acc_num, amount, done)
+    function checkSesion(check, username, acc_num, balance){
+
+      console.log("[Generate Qrcode checkSesion!]")
+
+      if(check){
+        genqr.getqr(base_url+'/scanqr/'+acc_num+'/'+amount)
+        res.render(dir_views+'qrcode.html')
       }
-      else{
-        res.cookie('session', {'user': req.cookies['session']['user']}, { maxAge: 1000 * 60 * 2})
-        res.redirect(base_url+'/home')
-      }
+      else
+        res.redirect(base_url+'/genqr')
     }
     db.checkSession(req.cookies['session']['user'], checkSesion)
   }
 })
 
-app.post('/genqr',function(req,res){
-  var amount = req.body.amount
-  if (typeof parseInt(amount) != "number") {
-    console.log('[server app.post /genqr] This is not number')
-    res.redirect(base_url+'/genqr')
-  }
+app.get('/scanqr/:acc_num/:amount',function(req,res){
+
+  var acc_num = req.params.acc_num
+  var amount = parseInt(req.params.amount)
+
   if(Object.keys(req.cookies).length == 0 || !('session' in req.cookies)){
+    res.cookie('session', {'scanqr': acc_num+'/'+amount}, { maxAge: 1000 * 60 * 2})
     res.redirect(base_url+'/login')
   }
+
+  else if(('session' in req.cookies) && ('user' in req.cookies['session'] && !('scanqr' in req.cookies['session']))){
+    res.cookie('session', {'user':req.cookies['session']['user'], 'scanqr': acc_num+'/'+amount}, { maxAge : 1000 * 60 * 2 })
+    res.redirect(base_url+'/home')
+  }
+
   else{
-    function checkSesion(check, username, acc_num, balance){
-      if(check){
-        genqr.getqr(base_url+'/genqr/'+acc_num+'/'+amount)
-        res.render(dir_views+'qrcode.html')
+    function checkSesion(check, payer, acc_payer, balance){
+
+      console.log("[Scan QRcode checkSesion and balance!]")
+
+      if(check && amount <= balance){
+
+        function done(){
+
+          console.log("[Transaction!]")
+
+          res.cookie('session', {'user': req.cookies['session']['user']}, { maxAge : 1000 * 60 * 2})
+          res.redirect(base_url+'/home')
+        }
+        db.transaction(req.cookies['session']['user'], payer, balance, acc_num, amount, done)
+
       }
-      else
-        res.redirect(base_url+'/genqr')
+      else{
+        res.cookie('session', {'user' : req.cookies['session']['user']}, { maxAge : 1000 * 60 * 2 })
+        res.redirect(base_url+'/home')
+      }
     }
     db.checkSession(req.cookies['session']['user'], checkSesion)
   }
