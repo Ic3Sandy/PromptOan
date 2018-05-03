@@ -73,29 +73,38 @@ body, html {
     text-align: center;
     color: white;
     margin: 30px;
+    padding-left: 20px;
     padding-top: 20px;
     padding-right: 30px;
 }
 
 .button {
   grid-area: button;
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 17px;
+  margin-bottom: 12px;
 }
 
 .image {
+  padding-top: 10px;
   grid-area: image;
   margin-right: -30px;
-  margin-left: -30px;  
+}
+
+img.size{
+  width:150px; 
+  height:150px;
+  border-radius: 25px;
 }
 
 .info {
+  padding-top: 10px;
   grid-area: info;
   text-align: left;
+  margin-left: 45px;
 }
   
   
-  @media (max-width: 600px) {
+  @media (max-width: 992px) {
     .alert-validate::before {
       visibility: visible;
       opacity: 1;
