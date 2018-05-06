@@ -37,13 +37,6 @@ if (PORT != 5000){
   var db = require('./db_mysql.js')
 }
 
-// SetUp IPInves for deploy
-// var request = require('request')
-// request('https://ipinvestigator.expeditedaddons.com/?api_key=Z4857LBYNEWT4D9H0C3U672O9J1QA3MS12RI0VFKXG56P8&ip=68.10.149.45', function (error, response, body) {
-//   console.log('Status:', response.statusCode)
-//   console.log('Headers:', JSON.stringify(response.headers))
-//   console.log('Response:', body)
-// })
 
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
@@ -65,6 +58,14 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
 
   console.log("[Login]")
+
+  // SetUp IPInves for deploy
+  // var request = require('request')
+  // request('https://ipinvestigator.expeditedaddons.com/?api_key=Z4857LBYNEWT4D9H0C3U672O9J1QA3MS12RI0VFKXG56P8&ip=68.10.149.45', function (error, response, body) {
+  //   console.log('Status:', response.statusCode)
+  //   console.log('Headers:', JSON.stringify(response.headers))
+  //   console.log('Response:', body)
+  // })
 
   if(Object.keys(req.cookies).length != 0 && ('session' in req.cookies)){
 
