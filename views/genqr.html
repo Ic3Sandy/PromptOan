@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>genqr</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="stylegenqr/images/icons/favicon.ico"/>
+ <title>genqr</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================--> 
+ <link rel="icon" type="image/png" href="stylegenqr/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/bootstrap/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/css-hamburgers/hamburgers.min.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/animate/animate.css">
+<!--===============================================================================================--> 
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/animsition/css/animsition.min.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylegenqr/vendor/daterangepicker/daterangepicker.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/select2/select2.min.css">
+<!--===============================================================================================--> 
+ <link rel="stylesheet" type="text/css" href="stylegenqr/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylegenqr/css/util.css">
-	<link rel="stylesheet" type="text/css" href="stylegenqr/css/main.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/css/util.css">
+ <link rel="stylesheet" type="text/css" href="stylegenqr/css/main.css">
 <!--===============================================================================================-->
 </head>
 <body>
-	<div class="limiter">
-		<div class="transparent">
-			<div class="container-login100">
-				<div class="wrap-login100 p-t-50 p-b-90 p-l-10 p-r-10">
-					<form class="login100-form validate-form flex-sb flex-w" action="/genqr" method="POST">
-						<span class="login100-form-title p-b-51">
-							Amount
-						</span>
+ <div class="limiter">
+  <div class="transparent">
+   <div class="container-login100">
+    <div class="wrap-login100 p-t-50 p-b-90 p-l-10 p-r-10">
+     <form class="login100-form validate-form flex-sb flex-w" action="/genqr" method="POST">
+      <span class="login100-form-title p-b-51">
+       Amount
+      </span>
 
-						
-						<div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
-							<input class="input100" type="number" name="amount">
-							<span class="focus-input100"></span>
-						</div>
-				
+      
+      <div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
+       <input class="input100" type="number" name="amount">
+       <span class="focus-input100"></span>
+      </div>
+    
 
-						<div class="container-login100-form-btn m-t-17" align="center">
+      <div class="container-login100-form-btn m-t-17" align="center">
                 
                             <input type="button" value="Home" class="login100-form-btn l" onclick="window.location.href='home'" 
                                 style="width: 50%">
                             <input type="submit" value="submit" class="login100-form-btn r" style="width: 50%">
 
                         </div>    
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- <form method="POST" action="login" >
-	Username  :<input type="text" name="username"><br>
-	Password   :<input type="password" name="password"><br>
-	<input type="submit" value="Login">
-	</form> -->
-	<div id="dropDownSelect1"></div>
-	
+     </form>
+    </div>
+   </div>
+  </div>
+ </div>
+ <!-- <form method="POST" action="login" >
+ Username  :<input type="text" name="username"><br>
+ Password   :<input type="password" name="password"><br>
+ <input type="submit" value="Login">
+ </form> -->
+ <div id="dropDownSelect1"></div>
+ 
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/jquery/jquery-3.2.1.min.js"></script>
+ <script src="stylegenqr/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/animsition/js/animsition.min.js"></script>
+ <script src="stylegenqr/vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/bootstrap/js/popper.js"></script>
-	<script src="stylegenqr/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="stylegenqr/vendor/bootstrap/js/popper.js"></script>
+ <script src="stylegenqr/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/select2/select2.min.js"></script>
+ <script src="stylegenqr/vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/daterangepicker/moment.min.js"></script>
-	<script src="stylegenqr/vendor/daterangepicker/daterangepicker.js"></script>
+ <script src="stylegenqr/vendor/daterangepicker/moment.min.js"></script>
+ <script src="stylegenqr/vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/vendor/countdowntime/countdowntime.js"></script>
+ <script src="stylegenqr/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="stylegenqr/js/main.js"></script>
+ <script src="stylegenqr/js/main.js"></script>
 </body>
 </html>
