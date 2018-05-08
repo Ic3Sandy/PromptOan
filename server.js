@@ -233,3 +233,4 @@ app.get('/scanqr/:acc_num/:amount',function(req,res){
 })
 
 app.listen(PORT)
+console.log("Port: "+PORT)
