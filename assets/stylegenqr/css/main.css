@@ -1,4 +1,4 @@
-
+/* 
 
 
 
@@ -324,20 +324,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
 [ Button ]*/
 .container-login100-form-btn {
   width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
   display:grid;
   grid-template-areas: "a b";
   grid-template-columns: auto auto;
-}
+} */
 
-.r{
+ .r{
   grid-area: b;
-  text-align: right;
 }
 
 
 .l{
   grid-area: a;
-  text-align: center;
 }
 
 .login100-form-btn {
@@ -368,7 +372,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
 
 
 
-.login100-form-btn:hover {
+.-form-btn:hover {
   background-color: #403866;
 }
 
@@ -443,4 +447,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96b4da8', e
 
 
 /*//////////////////////////////////////////////////////////////////
-[ Responsive ]*/
+[ Responsive ]*/ */
