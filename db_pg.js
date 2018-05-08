@@ -54,8 +54,7 @@ exports.checkSession = function(session, callback) {
             callback(false, null, null, null)
 
         else{
-            console.log(result['rows'][0])
-            callback(true, result['rows'][0].username, result['rows'][0].acc_num, result['rows'][0].balance)
+            callback(true, result['rows'][0]['username'], result['rows'][0]['acc_num'], result['rows'][0]['balance'])
         }
             
         
@@ -75,7 +74,7 @@ exports.transaction = function(session, payer, balance, acc_num, amount, callbac
     }
     client.query('SELECT * FROM users WHERE acc_num = $1', [acc_num], function (err, result, fields) {
         if (err) throw err
-        var balance_payee = result['rows'][0].balance + amount
+        var balance_payee = result['rows'][0]['balance'] + amount
         upBalance(balance_payee, payee)
     })
     callback()
