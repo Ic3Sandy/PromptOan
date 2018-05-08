@@ -55,6 +55,7 @@ app.get('/', function (req, res) {
   res.sendFile(dir_views+'main.html')
 })
 
+
 app.get('/login', function (req, res) {
 
   console.log("[Login]")
@@ -85,6 +86,7 @@ app.get('/login', function (req, res) {
     res.render(dir_views+'login.html')
 })
 
+
 app.post('/login', function (req, res) {
 
   if(!('username' in req.body && 'password' in req.body))
@@ -111,6 +113,7 @@ app.post('/login', function (req, res) {
     db.checkLogin(req.body.username, req.body.password, req.sessionID, checkLogin)
   }
 })
+
 
 app.get('/home', function(req,res){
 
@@ -148,6 +151,7 @@ app.get('/home', function(req,res){
   
 })
 
+
 app.get('/genqr',function(req,res){
 
   console.log("[Generate Qrcode!]")
@@ -158,6 +162,7 @@ app.get('/genqr',function(req,res){
     res.render(dir_views+'genqr.html')
     
 })
+
 
 app.post('/genqr',function(req,res){
 
@@ -184,6 +189,7 @@ app.post('/genqr',function(req,res){
     db.checkSession(req.cookies['session']['user'], checkSesion)
   }
 })
+
 
 app.get('/scanqr/:acc_num/:amount',function(req,res){
 
