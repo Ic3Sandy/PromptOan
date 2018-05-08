@@ -54,8 +54,7 @@ exports.checkSession = function(session, callback) {
             callback(false, null, null, null)
 
         else{
-            console.log(result['rows'].username)
-            console.log(result['rows'].acc_num)
+            console.log(result['rows'][0])
             callback(true, result['rows'][0].username, result['rows'][0].acc_num, result['rows'][0].balance)
         }
             
