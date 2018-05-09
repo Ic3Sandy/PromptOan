@@ -15,8 +15,8 @@
 
 - [x] ทำการส่งผ่านค่าจาก server ไป html
 - [x] สร้าง database ของ user
-- [ ] Project report
-- [ ] Slide presentation
+- [x] Project report
+- [x] Slide presentation
 
 ### Information
 
